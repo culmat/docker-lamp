@@ -1,0 +1,32 @@
+version: "3"
+services:
+  mysql:
+    image: mysql
+    volumes:
+      - ${MYSQL_DATA}:/var/lib/mysql/
+    networks:
+      - AMP
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_PWD}
+    ports:
+      - "${MYSQL_PORT}:3306"
+  php:
+    build: './docker/php/'
+    networks:
+      - AMP
+    volumes:
+      - ${WWW_ROOT}:/var/www/html/
+  apache:
+    build: './docker/apache/'
+    depends_on:
+      - php
+    networks:
+      - AMP
+    ports:
+      - "${HTTP_PORT}:80"
+    volumes:
+      - ${WWW_ROOT}:/var/www/html/
+      - ./docker/apache/docker.apache.conf:/usr/local/apache2/conf.d/docker.apache.conf
+      - ${APACHE_LOGS}:/usr/local/apache2/logs/
+networks:
+  AMP:
