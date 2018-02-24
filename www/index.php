@@ -9,7 +9,7 @@
 
 $host = 'mysql';
 $user = 'root';
-$pass = 'toor';
+$pass = '1234';
 
 $conn = new mysqli($host, $user, $pass);
 
