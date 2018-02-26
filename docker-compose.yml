@@ -16,6 +16,8 @@ services:
       - AMP
     volumes:
       - ${WWW_ROOT}:/var/www/html/
+    env_file:
+      - ${WWW_ENV}
   apache:
     build: './docker/apache/'
     depends_on:
